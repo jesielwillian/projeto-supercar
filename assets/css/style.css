@@ -1,0 +1,2397 @@
+/*
+  SUPERCAR GALLERY — style.css
+  MAPA DO ARQUIVO
+  A. Variáveis globais (:root)
+  B. Base, tipografia e efeitos
+  C. Botões e cartões
+  D. Movimento e revelação
+  E. Formulários
+  F. Modais e notificações
+  G. Componentes diversos
+  H. Keyframes (todas as animações em um único bloco)
+  I. Responsividade principal — tablet e celular
+  J. Tipografia fluida
+  K. Select personalizado
+  L. Zoom de imagens
+  M. Painel de personalização
+  N. Compatibilidade mobile
+  O. Página de código full-stack
+  P. Comparação de veículos
+  Q. Cabeçalho em tablets
+  R. Hero desktop e rodapé em tablets
+  S. Acesso administrativo
+  T. Ajustes finais de espaçamento e test drive
+
+  Organização:
+  • Propriedades seguem ordem alfabética sempre que isso não altera
+    a leitura de prefixos, fallbacks ou declarações dependentes.
+  • :root global fica concentrado no início; variáveis responsivas
+    permanecem no @media correspondente.
+  • @keyframes ficam agrupadas em H.
+  • Media queries mantêm a ordem funcional original. Não as reordenar
+    apenas pelo breakpoint: regras posteriores podem sobrescrever
+    ajustes anteriores de propósito.
+*/
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [A] VARIÁVEIS GLOBAIS (:root)
+   Cores, fontes, escalas tipográficas, raios, sombras e zoom das imagens. Edite aqui para mudar o visual inteiro.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+:root {
+    --accent-gradient: linear-gradient(135deg, var(--color-accent), var(--color-accent-2) 60%, var(--color-accent-3));
+    --card-border-width: 1px;
+    --card-hover-lift: -6px;
+    --card-image-height: 220px;
+    --color-accent: #f5b301;
+    --color-accent-2: #ff6a00;
+    --color-accent-3: #ff2d55;
+    --color-bg: #06070c;
+    --color-border: rgba(255, 255, 255, .10);
+    --color-danger: #ff3355;
+    --color-success: #22c55e;
+    --color-surface: #0e111c;
+    --color-surface-soft: #101322;
+    --color-text: #e8eaf0;
+    --color-text-muted: #9aa0b5;
+    --content-width: 80rem;
+    --control-padding-x: .9rem;
+    --control-padding-y: .68rem;
+    --font-body: Inter, sans-serif;
+    --font-heading: Orbitron, sans-serif;
+    --font-scale: .92;
+    --fs-2xl: calc(1.32rem * var(--font-scale));
+    --fs-3xl: calc(1.62rem * var(--font-scale));
+    --fs-4xl: calc(1.95rem * var(--font-scale));
+    --fs-5xl: calc(2.35rem * var(--font-scale));
+    --fs-6xl: calc(2.8rem * var(--font-scale));
+    --fs-7xl: calc(3.35rem * var(--font-scale));
+    --fs-base: calc(.88rem * var(--font-scale));
+    --fs-lg: calc(1rem * var(--font-scale));
+    --fs-sm: calc(.78rem * var(--font-scale));
+    --fs-xl: calc(1.12rem * var(--font-scale));
+    --fs-xs: calc(.68rem * var(--font-scale));
+    --header-height: 4rem;
+    --images-hover-zoom: 1.10;
+    --images-zoom: 1;
+    --images-zoom-easing: cubic-bezier(.22, 1, .36, 1);
+    --images-zoom-speed: 850ms;
+    --radius-card: 1.25rem;
+    --radius-lg: 1rem;
+    --radius-md: .8rem;
+    --radius-sm: .55rem;
+    --radius-xl: 1.5rem;
+    --shadow-card: 0 24px 60px -12px rgba(0, 0, 0, .8);
+    --space-admin-top: 0;
+    --space-gap: 1.75rem;
+    --space-login-y: 3.5rem;
+    --space-section-y: 2.5rem;
+    --space-stack: 20px;
+    --transition-fast: .2s ease;
+    --transition-normal: .3s ease;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [B] BASE, TIPOGRAFIA E EFEITOS
+   Rolagem, corpo da página, fonte de títulos, barra de rolagem, grade de fundo, vidro e texto em degradê.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+* {
+    scroll-behavior: smooth;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   SCROLLBAR PERSONALIZADA — TEMA SUPERCAR
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+* {
+    scrollbar-color: #f5b301 #0a0c13;
+    scrollbar-width: thin;
+}
+
+/* Chrome, Edge, Safari e navegadores WebKit */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #0a0c13;
+    border-left: 1px solid rgba(255, 255, 255, .04);
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg,
+            #f5b301 0%,
+            #ff6a00 55%,
+            #ff2d55 100%);
+    border: 2px solid #0a0c13;
+    border-radius: 999px;
+    min-height: 45px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg,
+            #ffc21a 0%,
+            #ff7a00 55%,
+            #ff3d64 100%);
+}
+
+::-webkit-scrollbar-thumb:active {
+    background: #f5b301;
+}
+
+::-webkit-scrollbar-corner {
+    background: #0a0c13;
+}
+
+/* Reset crítico independente do Tailwind: evita a margem padrão do navegador
+   aparecer como uma moldura durante o primeiro paint em dispositivos móveis. */
+html {
+    background: #06070c;
+    margin: 0;
+    min-height: 100%;
+    /* Keep the browser's native vertical overscroll gesture (pull-to-refresh). */
+    overscroll-behavior-y: auto;
+    padding: 0;
+}
+
+body {
+    background: #06070c;
+    color: #e8eaf0;
+    font-family: Inter, sans-serif;
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    overflow-x: hidden;
+    padding: 0;
+}
+
+.font-display {
+    font-family: Orbitron, sans-serif;
+}
+
+.grid-bg {
+    background-image: linear-gradient(rgba(255, 255, 255, .04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, .04) 1px, transparent 1px);
+    background-size: 44px 44px;
+}
+
+.glass {
+    -webkit-backdrop-filter: blur(18px);
+    backdrop-filter: blur(18px);
+    background: rgba(14, 16, 26, .72);
+}
+
+.text-grad {
+    background: linear-gradient(92deg, #fff 10%, #f5b301 45%, #ff5a00 75%, #ff2d55 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [C] BOTÕES E CARTÕES
+   Botão dourado, botão fantasma e cartões com elevação no hover.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.btn-gold {
+    background: linear-gradient(135deg, #f5b301, #ff6a00 60%, #ff2d55);
+    box-shadow: 0 8px 30px -6px rgba(245, 179, 1, .5);
+    color: #0a0a0a;
+    font-weight: 700;
+    transition: .3s;
+}
+
+.btn-ghost {
+    border: 1px solid rgba(255, 255, 255, .16);
+    transition: .3s;
+}
+
+.btn-ghost:hover {
+    background: rgba(245, 179, 1, .08);
+    border-color: #f5b301;
+}
+
+.btn-gold:hover {
+    box-shadow: 0 16px 40px -6px rgba(255, 90, 0, .6);
+    filter: brightness(1.08);
+    transform: translateY(-2px);
+}
+
+.card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .015));
+    border: 1px solid rgba(255, 255, 255, .09);
+    transition: .4s cubic-bezier(.2, .8, .2, 1);
+}
+
+.card:hover {
+    border-color: rgba(245, 179, 1, .5);
+    box-shadow: 0 24px 60px -12px rgba(0, 0, 0, .8), 0 0 0 1px rgba(245, 179, 1, .2), 0 12px 40px -10px rgba(245, 179, 1, .25);
+    transform: translateY(-8px);
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [D] MOVIMENTO E REVELAÇÃO
+   Faixa de marcas, flutuação, ponto "ao vivo", orbes de luz e elementos revelados na rolagem.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.marquee-track {
+    animation: marq 26s linear infinite;
+    display: flex;
+    gap: 3rem;
+    width: max-content;
+}
+
+.floaty {
+    animation: floaty 5s ease-in-out infinite;
+    margin-top: 40px;
+}
+
+.live-dot {
+    animation: pulseDot 2s infinite;
+}
+
+.orb {
+    border-radius: 50%;
+    filter: blur(90px);
+    opacity: .35;
+    pointer-events: none;
+    position: absolute;
+}
+
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: .7s cubic-bezier(.2, .8, .2, 1);
+}
+
+.reveal.visible {
+    opacity: 1;
+    transform: none;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [E] FORMULÁRIOS
+   Campos de texto, seleção e área de texto: estado normal, foco e erro.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+input,
+select,
+textarea {
+    background: #0e111c !important;
+    border: 1px solid rgba(255, 255, 255, .12) !important;
+    border-radius: .75rem !important;
+    color: #fff !important;
+    outline: none;
+    padding: .75rem 1rem !important;
+    transition: .25s;
+    width: 100%;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: #f5b301 !important;
+    box-shadow: 0 0 0 3px rgba(245, 179, 1, .15);
+}
+
+input.err,
+select.err,
+textarea.err {
+    border-color: #ff3355 !important;
+    box-shadow: 0 0 0 3px rgba(255, 51, 85, .15);
+}
+
+select option {
+    background: #0e111c;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [E.1] CONTROLES NUMÉRICOS — MODAL DE CADASTRO DE VEÍCULOS
+   Spinner customizado premium, alinhado no extremo direito.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+#carModal .number-field {
+    position: relative;
+    width: 100%;
+}
+
+#carModal .number-field>input[type="number"] {
+    padding-right: 3.15rem !important;
+    -moz-appearance: textfield;
+}
+
+#carModal .number-field>input[type="number"]::-webkit-inner-spin-button,
+#carModal .number-field>input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+#carModal .number-spinner {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    bottom: 1px;
+    width: 2.45rem;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    border-radius: 0 .68rem .68rem 0;
+    background: linear-gradient(180deg, rgba(245, 179, 1, .08), rgba(255, 106, 0, .04));
+    border-left: 1px solid rgba(245, 179, 1, .12);
+}
+
+#carModal .number-spinner button {
+    appearance: none;
+    -webkit-appearance: none;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    color: #f5b301;
+    cursor: pointer;
+    transition: background .18s ease, color .18s ease, transform .18s ease;
+}
+
+#carModal .number-spinner button+button {
+    border-top: 1px solid rgba(245, 179, 1, .10);
+}
+
+#carModal .number-spinner button:hover {
+    background: linear-gradient(135deg, rgba(245, 179, 1, .18), rgba(255, 106, 0, .12));
+    color: #ffb800;
+}
+
+#carModal .number-spinner button:active {
+    background: rgba(245, 179, 1, .22);
+}
+
+#carModal .number-spinner button:focus-visible {
+    outline: 1px solid #f5b301;
+    outline-offset: -2px;
+}
+
+#carModal .number-spinner i {
+    font-size: 11px;
+    line-height: 1;
+    filter: drop-shadow(0 0 4px rgba(245, 179, 1, .25));
+}
+
+#carModal .number-field:focus-within .number-spinner {
+    border-left-color: rgba(245, 179, 1, .3);
+    background: linear-gradient(180deg, rgba(245, 179, 1, .13), rgba(255, 106, 0, .06));
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [F] MODAIS E NOTIFICAÇÕES
+   Janelas modais e toasts (sucesso / erro).
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.modal {
+    align-items: center;
+    display: flex;
+    inset: 0;
+    justify-content: center;
+    opacity: 0;
+    padding: 1rem;
+    pointer-events: none;
+    position: fixed;
+    transition: .3s;
+    z-index: 90;
+}
+
+.modal .box {
+    transform: translateY(24px) scale(.97);
+    transition: .35s cubic-bezier(.2, .8, .2, 1);
+}
+
+.modal.active {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.modal.active .box {
+    transform: none;
+    border-top-right-radius: 0 !important;
+    border-bottom-right-radius: 0 !important;
+    transform: none;
+}
+
+#toasts {
+    bottom: 1.2rem;
+    display: flex;
+    flex-direction: column;
+    gap: .6rem;
+    max-width: min(92vw, 360px);
+    position: fixed;
+    right: 1.2rem;
+    z-index: 200;
+}
+
+.toast {
+    align-items: flex-start;
+    animation: tin .4s cubic-bezier(.2, .8, .2, 1);
+    background: #101322;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-left: 4px solid #f5b301;
+    border-radius: .9rem;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, .6);
+    display: flex;
+    gap: .7rem;
+    padding: .9rem 1rem;
+}
+
+.toast.success {
+    border-left-color: #22c55e;
+}
+
+.toast.error {
+    border-left-color: #ff3355;
+}
+
+.rounded-3xl {
+    border-radius: 1.5rem !important;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [G] COMPONENTES DIVERSOS
+   Pílulas de marca, barras de especificação, visualizador de código, favoritos, navegação, loader e estados auxiliares.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.pill {
+    border: 1px solid rgba(255, 255, 255, .14);
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: .8rem;
+    padding: .45rem 1rem;
+    transition: .25s;
+    white-space: nowrap;
+}
+
+.pill:hover {
+    border-color: #f5b301;
+}
+
+.pill.active {
+    background: linear-gradient(135deg, #f5b301, #ff6a00);
+    border-color: transparent;
+    color: #000;
+    font-weight: 700;
+}
+
+.spec-bar {
+    background: rgba(255, 255, 255, .08);
+    border-radius: 99px;
+    height: 8px;
+    overflow: hidden;
+}
+
+.spec-bar>div {
+    background: linear-gradient(90deg, #f5b301, #ff3d00);
+    border-radius: 99px;
+    height: 100%;
+    transition: width 1.2s cubic-bezier(.2, .8, .2, 1);
+    width: 0;
+}
+
+.codeview {
+    background: #080a12;
+    border: 1px solid rgba(255, 255, 255, .1);
+    border-radius: 1rem;
+    font-family: "JetBrains Mono", monospace;
+    font-size: .78rem;
+    line-height: 1.65;
+    max-height: 560px;
+    overflow: auto;
+}
+
+.filebtn {
+    border: 1px solid transparent;
+    border-radius: .7rem;
+    color: #b8bdd0;
+    font-family: "JetBrains Mono", monospace;
+    font-size: .78rem;
+    padding: .6rem .9rem;
+    text-align: left;
+    transition: .2s;
+    width: 100%;
+}
+
+.fav-heart {
+    transition: .25s;
+}
+
+.fav-heart.active svg {
+    fill: #ff2d55;
+    filter: drop-shadow(0 0 8px rgba(255, 45, 85, .7));
+    stroke: #ff2d55;
+}
+
+.fav-heart.pop {
+    animation: pop .4s;
+}
+
+.filebtn:hover {
+    background: rgba(255, 255, 255, .06);
+    color: #fff;
+}
+
+.filebtn.active {
+    background: rgba(245, 179, 1, .12);
+    border-color: rgba(245, 179, 1, .4);
+    color: #f5b301;
+}
+
+.navlink {
+    color: #b8bdd0;
+    font-size: .9rem;
+    font-weight: 500;
+    padding: .4rem .2rem;
+    position: relative;
+    transition: .2s;
+}
+
+.navlink.active,
+.navlink:hover {
+    color: #fff;
+}
+
+.navlink.active::after {
+    background: linear-gradient(90deg, #f5b301, #ff3d00);
+    border-radius: 99px;
+    bottom: -4px;
+    content: "";
+    height: 2px;
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+
+
+#loader {
+    align-items: center;
+    background: var(--color-bg, #06070c);
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    inset: 0;
+    justify-content: center;
+    opacity: 1;
+    position: fixed;
+    transition: opacity .6s ease;
+    z-index: 300;
+}
+
+.hero-line {
+    background: linear-gradient(90deg, transparent, rgba(245, 179, 1, .6), transparent);
+    height: 1px;
+}
+
+.badge-route {
+    background: rgba(34, 197, 94, .12);
+    border: 1px solid rgba(34, 197, 94, .3);
+    border-radius: 99px;
+    color: #4ade80;
+    font-family: "JetBrains Mono", monospace;
+    font-size: .7rem;
+    padding: .2rem .6rem;
+}
+
+.compare-win {
+    background: rgba(34, 197, 94, .14) !important;
+    border: 1px solid rgba(34, 197, 94, .4) !important;
+}
+
+.image-slot {
+    background: linear-gradient(135deg, rgba(245, 179, 1, .08), rgba(255, 106, 0, .04));
+}
+
+img.is-empty {
+    display: none !important;
+}
+
+/* ========================================
+   PREVIEW DA IMAGEM DO VEÍCULO
+======================================== */
+
+#fPreview {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 112px;
+    height: 80px;
+    min-width: 112px;
+    overflow: hidden;
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 12px;
+    background-color: rgba(0, 0, 0, .4);
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    cursor: pointer;
+    transition:
+        border-color .3s ease,
+        background-color .3s ease,
+        box-shadow .3s ease;
+}
+
+/* ========================================
+   ESTADO VAZIO
+======================================== */
+
+#fPreview.is-empty {
+    visibility: visible;
+    border: 1px dashed rgba(255, 166, 0, .45);
+    background-color: rgba(255, 166, 0, .025);
+}
+
+/* ÍCONES FONT AWESOME DA PRÉVIA */
+
+#fPreview .f-preview-add-icon,
+#fPreview .f-preview-remove-icon {
+    pointer-events: none;
+    position: absolute;
+    transition:
+        background-color .25s ease,
+        border-color .25s ease,
+        color .25s ease,
+        opacity .25s ease,
+        transform .25s ease;
+}
+
+#fPreview .f-preview-add-icon {
+    color: #ffa600;
+    font-size: 24px;
+    inset: 0;
+    line-height: 1;
+    opacity: 0;
+    display: grid;
+    place-items: center;
+    transform: scale(.92);
+}
+
+#fPreview.is-empty .f-preview-add-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#fPreview.is-empty:hover .f-preview-add-icon {
+    color: #ffbd38;
+    transform: scale(1.12);
+}
+
+#fPreview .f-preview-remove-icon {
+    align-items: center;
+    background: rgba(15, 17, 26, .9);
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 50%;
+    color: #fff;
+    display: flex;
+    font-size: 11px;
+    height: 21px;
+    justify-content: center;
+    opacity: 0;
+    right: 5px;
+    top: 5px;
+    transform: scale(.85);
+    width: 21px;
+}
+
+#fPreview:not(.is-empty) .f-preview-remove-icon {
+    opacity: 1;
+    transform: scale(1);
+}
+
+#fPreview:not(.is-empty):hover .f-preview-remove-icon {
+    background: #e54848;
+    border-color: #e54848;
+    color: #fff;
+}
+
+/* ========================================
+   TEXTO DE AJUDA
+======================================== */
+
+.car-image-help {
+    max-width: 100%;
+    color: #777d8d;
+    font-size: 11px;
+    line-height: 1.6;
+}
+
+.shake {
+    animation: shake .4s;
+}
+
+.tilt {
+    transform-style: preserve-3d;
+    will-change: transform;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [H] KEYFRAMES
+   Todas as animações nomeadas usadas no projeto.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@keyframes floaty {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(-14px);
+    }
+}
+
+@keyframes marq {
+    to {
+        transform: translateX(-50%);
+    }
+}
+
+@keyframes pop {
+    40% {
+        transform: scale(1.4);
+    }
+}
+
+@keyframes pulseDot {
+
+    0%,
+    100% {
+        box-shadow: 0 0 0 0 rgba(34, 197, 94, .6);
+        opacity: 1;
+    }
+
+    50% {
+        box-shadow: 0 0 0 8px rgba(34, 197, 94, 0);
+        opacity: .7;
+    }
+}
+
+@keyframes shake {
+
+    20%,
+    60% {
+        transform: translateX(-8px);
+    }
+
+    40%,
+    80% {
+        transform: translateX(8px);
+    }
+}
+
+@keyframes tin {
+    from {
+        opacity: 0;
+        transform: translateX(40px);
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [I] RESPONSIVIDADE — TABLET E CELULAR
+   Grades, hero e modais em retrato e paisagem; respeita "reduzir movimento".
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@media (max-width: 1024px) {
+    .card:hover {
+        transform: translateY(-4px);
+    }
+
+    .card:hover img {
+        transform: scale(1.035);
+    }
+
+    #view-details .details-visual img {
+        max-height: 340px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    #view-home .hero-layout {
+        grid-template-columns: minmax(0, 1fr);
+        padding-bottom: 2rem;
+    }
+
+    #carsGrid,
+    #favGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .modal {
+        padding: 1.25rem;
+    }
+
+    #view-home .hero-layout> :first-child {
+        max-width: 760px;
+    }
+
+    #view-home .hero-visual {
+        margin-inline: auto;
+        max-width: 680px;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    #view-home .hero-layout {
+        width: 100% !important;
+        max-width: none !important;
+        margin-inline: 0 !important;
+        padding-inline: 20px !important;
+        box-sizing: border-box;
+    }
+
+    #carsGrid,
+    #favGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    #view-home .hero-visual {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 767px) {
+    body {
+        overflow-x: clip;
+    }
+
+    .marquee-track {
+        gap: 1.5rem;
+    }
+
+    .modal {
+        align-items: flex-end;
+        padding: .5rem;
+    }
+
+    #toasts {
+        bottom: .75rem;
+        left: .75rem;
+        max-width: none;
+        right: .75rem;
+    }
+
+    .modal .box {
+        max-height: min(88dvh, 760px);
+        overflow-y: auto;
+        width: 100%;
+    }
+
+    #quickBody>img {
+        background: rgba(0, 0, 0, .28);
+        height: 170px;
+        object-fit: contain;
+    }
+
+    #view-details .details-visual img {
+        height: 230px;
+        max-height: 230px;
+        object-fit: contain;
+    }
+}
+
+@media (max-width: 767px) and (orientation: portrait) {
+
+    #carsGrid,
+    #favGrid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+    #compareTray {
+        align-items: stretch;
+    }
+
+    #view-home .hero-layout {
+        gap: 1.75rem;
+        grid-template-columns: minmax(0, 1fr);
+        padding-bottom: 2.5rem;
+        padding-top: 3.5rem !important;
+    }
+
+    #view-home .hero-visual {
+        margin-inline: auto;
+        max-width: 520px;
+    }
+}
+
+@media (max-width: 767px) and (orientation: landscape) {
+
+    #carsGrid,
+    #favGrid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .modal {
+        align-items: center;
+    }
+
+    #view-home .hero-layout {
+        display: grid;
+        gap: 1rem;
+        grid-template-columns: 1fr;
+        padding-bottom: 2rem;
+        padding-top: 2rem;
+    }
+
+    #view-home .hero-visual {
+        max-height: 260px;
+    }
+
+    #view-home .hero-visual img {
+        max-height: 260px;
+        object-fit: contain;
+    }
+
+    .modal .box {
+        max-height: 82dvh;
+    }
+
+    #view-login,
+    #loginAccess {
+        box-sizing: border-box;
+        min-width: 0;
+        padding-top: 10rem;
+        width: 100%;
+    }
+
+    .backend-container {
+        padding-top: 2.5rem !important;
+    }
+
+    .pt-\[3\.4rem\] {
+        padding-top: 2.5rem !important;
+    }
+
+    .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal.active .box {
+        transform: none;
+        margin: 0 20px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::after,
+    *::before {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [J] TIPOGRAFIA FLUIDA (TEXTOS EM PORTUGUÊS)
+   Quebra de palavras longas e tamanhos com clamp() no hero, detalhes e navegação.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+#mobileMenu a,
+#mobileMenu button,
+nav a,
+nav button,
+#view-details #detailsWrap .card,
+#view-details #detailsWrap button,
+#view-details .details-visual+div,
+#view-home .hero-layout .btn-ghost,
+#view-home .hero-layout .btn-gold,
+#view-home .hero-layout p,
+#view-home .hero-visual .font-display {
+    hyphens: auto;
+    min-width: 0;
+    overflow-wrap: anywhere;
+}
+
+#mobileMenu a,
+#mobileMenu button,
+nav a,
+nav button,
+#view-details #detailsWrap button,
+#view-home .hero-layout .btn-ghost,
+#view-home .hero-layout .btn-gold {
+    font-size: clamp(.68rem, .82vw + .48rem, .9rem);
+    line-height: 1.35;
+}
+
+#view-home .hero-visual .absolute.bottom-0 {
+    padding: clamp(.85rem, 2vw, 1.25rem);
+}
+
+#view-details #detailsWrap .grid.grid-cols-3>div {
+    min-width: 0;
+    padding: clamp(.55rem, 1.4vw, 1rem);
+}
+
+#view-home .hero-visual .absolute.bottom-0 .flex {
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+#view-home .hero-visual .font-display {
+    line-height: 1.2;
+}
+
+#view-details #detailsWrap h1 {
+    font-size: clamp(1.55rem, 3vw, 3rem);
+    line-height: 1.18;
+    overflow-wrap: anywhere;
+}
+
+#view-details #detailsWrap .grid.grid-cols-3>div>div {
+    font-size: clamp(.62rem, .75vw + .38rem, .9rem);
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+}
+
+@media (max-width: 640px) {
+    #view-home .hero-visual .absolute.bottom-0 .flex.gap-4 {
+        font-size: .65rem;
+        gap: .5rem;
+    }
+
+    #view-details #detailsWrap .grid.grid-cols-3 {
+        gap: .5rem;
+    }
+
+    .sm\:grid-cols-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [K] SELECT PERSONALIZADO
+   Controle de seleção escuro gerado pelo app.js (gatilho, seta, menu e opções).
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.custom-select {
+    position: relative;
+    width: 100%;
+}
+
+.custom-select__native {
+    clip: rect(0 0 0 0) !important;
+    clip-path: inset(50%) !important;
+    height: 1px !important;
+    left: 0 !important;
+    opacity: 0 !important;
+    overflow: hidden !important;
+    padding: 0 !important;
+    pointer-events: none !important;
+    position: absolute !important;
+    top: 0 !important;
+    white-space: nowrap !important;
+    width: 1px !important;
+}
+
+.custom-select__trigger {
+    align-items: center;
+    background: #0e111c;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: .75rem;
+    color: #f4f5f8;
+    cursor: pointer;
+    display: flex;
+    font: inherit;
+    gap: 1rem;
+    justify-content: space-between;
+    min-height: 46px;
+    padding: .75rem 1rem;
+    text-align: left;
+    transition: background .2s ease, border-color .2s ease, box-shadow .2s ease;
+    width: 100%;
+}
+
+.custom-select.is-open .custom-select__trigger,
+.custom-select__trigger:hover {
+    background: #131927;
+    border-color: rgba(245, 179, 1, .65);
+}
+
+.custom-select__trigger:focus-visible {
+    border-color: #f5b301;
+    box-shadow: 0 0 0 3px rgba(245, 179, 1, .15);
+    outline: none;
+}
+
+.custom-select__chevron {
+    color: #f5b301;
+    flex: 0 0 auto;
+    font-size: .75rem;
+    margin-left: auto;
+    transition: transform .2s ease;
+}
+
+.custom-select.is-open .custom-select__chevron {
+    transform: rotate(180deg);
+}
+
+.custom-select__value {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.custom-select__menu {
+    background: #10141f;
+    border: 1px solid rgba(245, 179, 1, .28);
+    border-radius: .8rem;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, .48);
+    display: none;
+    left: 0;
+    margin-top: .45rem;
+    max-height: 260px;
+    overflow: auto;
+    padding: .35rem;
+    position: absolute;
+    right: 0;
+    scrollbar-color: #45404a #10141f;
+    scrollbar-width: thin;
+    z-index: 120;
+}
+
+.custom-select.is-open .custom-select__menu {
+    display: block;
+}
+
+.custom-select__option {
+    background: transparent;
+    border: 0;
+    border-radius: .5rem;
+    color: #d8dce5;
+    cursor: pointer;
+    display: block;
+    font: inherit;
+    padding: .7rem .8rem;
+    text-align: left;
+    transition: background .16s ease, color .16s ease;
+    width: 100%;
+}
+
+.custom-select__option:focus-visible,
+.custom-select__option:hover {
+    background: rgba(245, 179, 1, .12);
+    color: #ffc21a;
+    outline: none;
+}
+
+.custom-select__option[aria-selected="true"] {
+    background: rgba(245, 179, 1, .16);
+    color: #ffc21a;
+}
+
+.custom-select__option:disabled {
+    color: #687080;
+    cursor: not-allowed;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [L] ZOOM DE IMAGENS
+   Zoom suave controlado pelas variáveis --images-* da seção A; desativado sem hover.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.image-zoom {
+    -webkit-backface-visibility: hidden;
+    backface-visibility: hidden;
+    display: block;
+    object-fit: cover !important;
+    transform: scale(var(--images-zoom)) translateZ(0);
+    transform-origin: 50% 50%;
+    transition: transform var(--images-zoom-speed) var(--images-zoom-easing);
+    will-change: transform;
+}
+
+.card:hover .image-zoom,
+#cmpResult .image-zoom:hover,
+.details-visual:hover .image-zoom,
+#quickBody .image-zoom:hover {
+    transform: scale(var(--images-hover-zoom)) translateZ(0);
+}
+
+@media (hover: none) {
+
+    .card:hover .image-zoom,
+    .details-visual:hover .image-zoom {
+        transform: scale(var(--images-zoom)) translateZ(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .image-zoom {
+        transition-duration: 0.01ms;
+        will-change: auto;
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [M] PAINEL DE PERSONALIZAÇÃO
+   Liga a base, a escala tipográfica do Tailwind e os componentes às variáveis da seção A.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+html {
+    font-size: 16px;
+    scroll-behavior: smooth;
+}
+
+body {
+    background: var(--color-bg);
+    color: var(--color-text);
+    font-family: var(--font-body);
+    font-size: var(--fs-base);
+}
+
+.font-display {
+    font-family: var(--font-heading);
+}
+
+[class~="text-[10px]"],
+[class~="text-[11px]"],
+.text-xs {
+    font-size: var(--fs-xs) !important;
+}
+
+[class~="text-[12px]"],
+.text-sm {
+    font-size: var(--fs-sm) !important;
+}
+
+.btn-ghost:hover,
+.pill:hover {
+    border-color: var(--color-accent);
+}
+
+.btn-gold {
+    background: var(--accent-gradient);
+    box-shadow: 0 8px 30px -6px color-mix(in srgb, var(--color-accent) 50%, transparent);
+}
+
+.btn-gold:hover {
+    box-shadow: 0 16px 40px -6px color-mix(in srgb, var(--color-accent-2) 60%, transparent);
+}
+
+.card {
+    border-color: var(--color-border);
+    border-radius: var(--radius-card);
+    border-width: var(--card-border-width);
+}
+
+.card:hover {
+    border-color: color-mix(in srgb, var(--color-accent) 50%, transparent);
+    box-shadow: var(--shadow-card);
+    transform: translateY(var(--card-hover-lift));
+}
+
+input,
+select,
+textarea {
+    background: var(--color-surface) !important;
+    border-radius: var(--radius-md) !important;
+    padding: var(--control-padding-y) var(--control-padding-x) !important;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+    border-color: var(--color-accent) !important;
+}
+
+.border-amber-500\/40 {
+    border-color: color-mix(in srgb, var(--color-accent) 40%, transparent) !important;
+}
+
+
+.bg-amber-500\/10 {
+    background-color: color-mix(in srgb, var(--color-accent) 10%, transparent) !important;
+}
+
+.text-base {
+    font-size: var(--fs-base) !important;
+}
+
+.text-lg {
+    font-size: var(--fs-lg) !important;
+}
+
+.text-xl {
+    font-size: var(--fs-xl) !important;
+}
+
+.text-2xl {
+    font-size: var(--fs-2xl) !important;
+}
+
+.text-3xl {
+    font-size: var(--fs-3xl) !important;
+}
+
+.text-4xl {
+    font-size: var(--fs-4xl) !important;
+}
+
+.text-5xl {
+    font-size: var(--fs-5xl) !important;
+}
+
+.text-6xl {
+    font-size: var(--fs-6xl) !important;
+}
+
+.text-7xl {
+    font-size: var(--fs-7xl) !important;
+}
+
+.navlink {
+    font-size: var(--fs-sm);
+}
+
+.pill {
+    font-size: var(--fs-sm);
+}
+
+.text-amber-300,
+.text-amber-400 {
+    color: var(--color-accent) !important;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [N] COMPATIBILIDADE MOBILE
+   Texto em degradê sólido em aparelhos antigos, cartões sem contorno de toque e ritmo vertical de 20px.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@media (max-width: 767px) {
+    :root {
+        --card-hover-lift: -3px;
+        --card-image-height: 185px;
+        --fs-base: calc(.84rem * var(--font-scale));
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [O] PÁGINA DE CÓDIGO FULL-STACK
+   Impede estouro horizontal de grades, blocos de código, imagens e tabelas.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+#view-backend {
+    box-sizing: border-box;
+    margin: 0;
+    max-width: 100%;
+    overflow-x: hidden;
+    padding: 0;
+    width: 100%;
+}
+
+#view-backend .grid {
+    box-sizing: border-box;
+    margin-inline: 0;
+    max-width: 100%;
+    min-width: 0;
+    padding-inline: 0;
+    width: 100%;
+}
+
+#view-backend code,
+#view-backend pre {
+    box-sizing: border-box;
+    max-width: 100%;
+    overflow-wrap: anywhere;
+    white-space: pre-wrap;
+}
+
+#view-backend iframe,
+#view-backend img,
+#view-backend table {
+    box-sizing: border-box;
+    max-width: 100%;
+}
+
+@media (max-width: 767px) {
+    .text-grad {
+        background: none;
+        -webkit-background-clip: initial;
+        background-clip: initial;
+        color: #f5b301;
+        display: inline;
+        -webkit-text-fill-color: #f5b301;
+    }
+
+    .card {
+        background: linear-gradient(180deg, rgba(255, 255, 255, .06), rgba(255, 255, 255, .015));
+        border: 1px solid rgba(255, 255, 255, .09) !important;
+        border-radius: var(--radius-card);
+        outline: none !important;
+        -webkit-tap-highlight-color: transparent;
+        transition: .4s cubic-bezier(.2, .8, .2, 1);
+    }
+
+    .card:hover {
+        border-color: rgba(245, 179, 1, .5) !important;
+        box-shadow: 0 24px 60px -12px rgba(0, 0, 0, .8), 0 0 0 1px rgba(245, 179, 1, .2), 0 12px 40px -10px rgba(245, 179, 1, .25);
+        transform: translateY(var(--card-hover-lift));
+    }
+
+    .card:active,
+    .card:focus,
+    .card:focus-visible,
+    .card:focus-within {
+        border-color: transparent !important;
+        outline: none !important;
+    }
+
+    #view-backend>div>*+*,
+    #view-cars>div>*+*,
+    #view-details #detailsWrap>*+*,
+    #view-favorites>div>*+*,
+    #loginAccess>*+* {
+        margin-block-start: 20px;
+    }
+
+    #view-home>.relative~* {
+        margin-block-start: 15px;
+        margin-block-end: 15px;
+    }
+}
+
+@media (hover: none) {
+
+    .card:active,
+    .card:focus,
+    .card:focus-visible,
+    .card:hover {
+        border-color: transparent !important;
+        box-shadow: none !important;
+        transform: none;
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [P] COMPARAÇÃO DE VEÍCULOS
+   Cartões dos carros, tabela de especificações, vencedor e veredito.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+.compare-car-card {
+    background: linear-gradient(145deg, rgba(255, 255, 255, .065), rgba(255, 255, 255, .018));
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 1rem;
+    min-width: 0;
+    overflow: hidden;
+    transition: border-color .25s ease, transform .25s ease;
+}
+
+.compare-car-card:hover {
+    border-color: rgba(245, 179, 1, .42);
+    transform: translateY(-2px);
+}
+
+.compare-car-image {
+    background: #090b10;
+    height: clamp(88px, 13vw, 126px);
+    overflow: hidden;
+}
+
+.compare-car-image img {
+    height: 100%;
+    object-fit: cover;
+    width: 100%;
+}
+
+.compare-results {
+    --compare-line: rgba(255, 255, 255, .075);
+    --compare-muted: #858b99;
+    margin-top: 1.35rem;
+}
+
+.compare-cars {
+    align-items: end;
+    display: grid;
+    gap: .65rem;
+    grid-template-columns: minmax(105px, .78fr) repeat(2, minmax(0, 1fr));
+    margin-bottom: .7rem;
+}
+
+.compare-spacer {
+    color: var(--compare-muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: .58rem;
+    letter-spacing: .12em;
+    padding: 0 0 .8rem .25rem;
+}
+
+.compare-car-name {
+    color: #aeb3bf;
+    font-size: .66rem;
+    line-height: 1.35;
+    padding: .65rem .4rem .7rem;
+    text-align: center;
+}
+
+.compare-car-name strong {
+    color: #f7f7f8;
+    display: block;
+    font-size: .75rem;
+    font-weight: 750;
+    margin-top: .12rem;
+}
+
+.compare-table-wrap {
+    background: rgba(255, 255, 255, .018);
+    border: 1px solid var(--compare-line);
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.compare-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    width: 100%;
+}
+
+.compare-label {
+    color: var(--compare-muted);
+    font-family: "JetBrains Mono", monospace;
+    font-size: .61rem;
+    font-weight: 500;
+    letter-spacing: .055em;
+    text-align: left;
+    text-transform: uppercase;
+    width: 27%;
+}
+
+.compare-row>* {
+    border-bottom: 1px solid var(--compare-line);
+    height: 58px;
+    padding: .7rem .8rem;
+}
+
+.compare-row:last-child>* {
+    border-bottom: 0;
+}
+
+.compare-value {
+    color: #f0f1f4;
+    font-size: .83rem;
+    font-weight: 750;
+    position: relative;
+    text-align: center;
+    transition: background .2s ease;
+}
+
+.compare-value+.compare-value {
+    border-left: 1px solid var(--compare-line);
+}
+
+.compare-value.is-winner {
+    background: linear-gradient(135deg, rgba(16, 185, 129, .16), rgba(16, 185, 129, .07));
+    color: #72e6ad;
+}
+
+.compare-best {
+    color: #53d99a;
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: .53rem;
+    font-weight: 600;
+    letter-spacing: .04em;
+    margin-top: .22rem;
+    text-transform: uppercase;
+}
+
+.compare-best i {
+    font-size: .5rem;
+    margin-right: .15rem;
+}
+
+.compare-verdict {
+    align-items: center;
+    background: linear-gradient(110deg, rgba(245, 179, 1, .105), rgba(255, 106, 0, .035));
+    border: 1px solid rgba(245, 179, 1, .2);
+    border-radius: 1rem;
+    display: flex;
+    gap: .85rem;
+    margin-top: .85rem;
+    padding: .9rem 1rem;
+}
+
+.compare-verdict-icon {
+    align-items: center;
+    background: rgba(245, 179, 1, .13);
+    border: 1px solid rgba(245, 179, 1, .22);
+    border-radius: .8rem;
+    color: #ffc43d;
+    display: flex;
+    flex: 0 0 2.5rem;
+    height: 2.5rem;
+    justify-content: center;
+}
+
+.compare-verdict small {
+    color: #d7a936;
+    display: block;
+    font-family: "JetBrains Mono", monospace;
+    font-size: .55rem;
+    letter-spacing: .1em;
+}
+
+.compare-verdict strong {
+    color: #fff;
+    display: block;
+    font-size: .85rem;
+    margin-top: .15rem;
+}
+
+.compare-verdict p {
+    color: #9298a5;
+    font-size: .68rem;
+    margin-top: .1rem;
+}
+
+@media (max-width: 520px) {
+    .compare-car-image {
+        height: 76px;
+    }
+
+    .compare-cars {
+        gap: .4rem;
+        grid-template-columns: minmax(76px, .62fr) repeat(2, minmax(0, 1fr));
+    }
+
+    .compare-spacer {
+        font-size: .48rem;
+        letter-spacing: .04em;
+    }
+
+    .compare-car-name {
+        font-size: .55rem;
+        padding: .5rem .2rem;
+    }
+
+    .compare-car-name strong {
+        font-size: .62rem;
+    }
+
+    .compare-label {
+        font-size: .49rem;
+        letter-spacing: 0;
+        width: 27%;
+    }
+
+    .compare-row>* {
+        height: 54px;
+        padding: .55rem .35rem;
+    }
+
+    .compare-value {
+        font-size: .68rem;
+    }
+
+    .compare-best {
+        font-size: .45rem;
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [Q] CABEÇALHO EM TABLETS
+   Hambúrguer em retrato; cabeçalho desktop compacto em paisagem (iPad Mini / iPad Pro 13).
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@media screen and (min-width: 600px) and (max-width: 1100px) and (orientation: portrait) {
+
+    .desktop-auth,
+    .desktop-nav {
+        display: none !important;
+    }
+
+    .site-header-inner {
+        box-sizing: border-box;
+        max-width: 1280px;
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+        width: 100%;
+    }
+
+    .site-header>div:first-child {
+        padding-left: 40px !important;
+        padding-right: 40px !important;
+    }
+
+    .tablet-burger {
+        align-items: center;
+        display: flex !important;
+        flex: 0 0 44px;
+    }
+
+    .tablet-menu:not(.hidden) {
+        display: block !important;
+    }
+
+    #view-login,
+    #loginAccess {
+        padding-top: 2.5rem !important;
+    }
+
+    #view-login #adminWrap>*+* {
+        margin-block-start: var(--space-stack);
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1100px) and (orientation: landscape) {
+
+    .desktop-auth,
+    .desktop-nav {
+        display: flex !important;
+    }
+
+    .desktop-nav {
+        align-items: center;
+        flex: 1 1 auto;
+        gap: 0.75rem !important;
+        justify-content: center;
+        min-width: 0;
+    }
+
+    .desktop-auth {
+        align-items: center;
+        flex: 0 0 auto;
+        gap: 0.5rem !important;
+    }
+
+    .desktop-auth #authLabel {
+        display: none;
+    }
+
+    .desktop-nav .navlink {
+        font-size: 0.78rem;
+        white-space: nowrap;
+    }
+
+    .desktop-auth a {
+        font-size: 0.75rem;
+        padding-left: 0.65rem;
+        padding-right: 0.65rem;
+        white-space: nowrap;
+    }
+
+    .site-header-inner {
+        box-sizing: border-box;
+        gap: 0.75rem !important;
+        margin-inline: auto;
+        max-width: 1280px;
+        padding-left: 24px !important;
+        padding-right: 24px !important;
+        width: 100%;
+    }
+
+    .site-header-inner>a:first-child {
+        flex: 0 0 auto;
+        gap: 0.5rem;
+    }
+
+    .site-header-inner>a:first-child .font-display {
+        font-size: 0.8rem;
+        white-space: nowrap;
+    }
+
+    .site-header-inner>a:first-child .font-mono {
+        font-size: 0.55rem;
+        white-space: nowrap;
+    }
+
+    .site-header-inner>a:first-child>div:first-child {
+        height: 3.5rem;
+        width: 3.5rem;
+    }
+
+    .tablet-burger {
+        display: none !important;
+    }
+
+    .tablet-menu {
+        display: none !important;
+    }
+
+    #view-backend>.backend-container {
+        box-sizing: border-box;
+        margin-inline: auto;
+        max-width: 1265px;
+        padding-left: 32px !important;
+        padding-right: 32px !important;
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 1101px) and (max-width: 1400px) and (orientation: landscape) {
+    .site-header-inner {
+        box-sizing: border-box;
+        margin-inline: auto;
+        max-width: 1280px;
+        padding-left: 60px !important;
+        padding-right: 60px !important;
+        width: 100%;
+    }
+
+    #view-backend>.backend-container {
+        box-sizing: border-box;
+        margin-inline: auto;
+        max-width: 1265px;
+        padding-left: 60px !important;
+        padding-right: 60px !important;
+        width: 100%;
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [R] HERO DESKTOP E RODAPÉ EM TABLETS
+   Grade do hero no desktop, menu oculto em paisagem e rodapé preso ao fim da tela.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@media screen and (min-width: 1101px) {
+    #view-home .hero-layout {
+        gap: 1.75rem;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        padding-bottom: 2.5rem;
+        padding-top: 2.5rem !important;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1100px) and (orientation: landscape) {
+
+    .desktop-auth,
+    .desktop-nav {
+        display: flex !important;
+    }
+
+    .tablet-burger {
+        display: none !important;
+        visibility: hidden !important;
+    }
+
+    #mobileMenu,
+    .tablet-menu {
+        display: none !important;
+        visibility: hidden !important;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1100px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        min-height: 100dvh;
+    }
+
+    body>main {
+        flex: 1 0 auto;
+    }
+
+    body>footer {
+        flex-shrink: 0;
+    }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [S] ACESSO ADMINISTRATIVO
+   Login, painel, tabela de estoque, imagens e espaçamentos importados do projeto ajustado.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+#view-login,
+#loginAccess {
+    box-sizing: border-box;
+    min-width: 0;
+    padding-top: 70px !important;
+    width: 100%;
+}
+
+#loginAccess {
+    margin-left: auto !important;
+    margin-right: auto !important;
+    max-width: 460px;
+    padding-top: clamp(24px, 4vh, 48px) !important;
+}
+
+#loginCard {
+    box-sizing: border-box;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    width: 100%;
+}
+
+#view-login #forgotPasswordForm,
+#view-login #loginForm {
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 100%;
+}
+
+#view-login #forgotPasswordForm>button,
+#view-login #loginForm>button {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#view-login .bg-amber-500\/10 {
+    text-align: center;
+}
+
+#view-login input {
+    box-sizing: border-box;
+    max-width: 100%;
+    width: 100%;
+}
+
+/* Visualização temporária da senha no login administrativo. */
+#view-login .login-password-toggle {
+    align-items: center;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    display: inline-flex;
+    justify-content: center;
+    min-height: 36px;
+    min-width: 36px;
+    padding: 0;
+    touch-action: none;
+    z-index: 2;
+}
+
+#view-login .login-password-toggle:focus-visible {
+    border-radius: 8px;
+    outline: 2px solid #d9a441;
+    outline-offset: 2px;
+}
+
+#view-login .login-password-tooltip {
+    background: #171923;
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: 6px;
+    bottom: calc(100% + 9px);
+    color: #f3f4f6;
+    font-size: 11px;
+    font-weight: 500;
+    left: 50%;
+    opacity: 0;
+    padding: 6px 9px;
+    pointer-events: none;
+    position: absolute;
+    transform: translate(-50%, 4px);
+    transition: opacity .16s ease, transform .16s ease;
+    white-space: nowrap;
+    visibility: hidden;
+}
+
+#view-login .login-password-tooltip::after {
+    border: 5px solid transparent;
+    border-top-color: #171923;
+    content: "";
+    left: 50%;
+    position: absolute;
+    top: 100%;
+    transform: translateX(-50%);
+}
+
+@media (hover: hover) and (pointer: fine) {
+    #view-login .login-password-toggle:hover .login-password-tooltip,
+    #view-login .login-password-toggle:focus-visible .login-password-tooltip {
+        opacity: 1;
+        transform: translate(-50%, 0);
+        visibility: visible;
+    }
+}
+
+@media screen and (max-width: 599px) {
+    #loginAccess {
+        max-width: 460px;
+        padding-top: 24px !important;
+    }
+
+    #loginCard {
+        padding: 22px !important;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    #loginCard {
+        padding: 18px !important;
+    }
+}
+
+/* Painel: tabela e enquadramento das fotos do estoque (propriedades em ordem alfabética). */
+table.admin-table {
+    border-collapse: collapse;
+    font-size: .85rem;
+    width: 100%;
+}
+
+table.admin-table th {
+    border-bottom: 1px solid rgba(255, 255, 255, .1);
+    color: #9aa0b5;
+    font-family: Orbitron;
+    font-size: .68rem;
+    letter-spacing: .12em;
+    padding: .8rem;
+    text-align: left;
+    text-transform: uppercase;
+    white-space: nowrap;
+}
+
+table.admin-table td {
+    border-bottom: 1px solid rgba(255, 255, 255, .06);
+    padding: .8rem;
+    vertical-align: middle;
+}
+
+table.admin-table tr:hover td {
+    background: rgba(245, 179, 1, .04);
+}
+
+.admin-image-frame {
+    border-radius: .5rem;
+    display: inline-flex;
+    flex: 0 0 auto;
+    height: 2.5rem;
+    overflow: hidden;
+    width: 3.5rem;
+}
+
+.admin-image-frame .image-zoom {
+    height: 100%;
+    width: 100%;
+}
+
+.admin-image-frame:hover .image-zoom {
+    transform: scale(var(--images-hover-zoom)) translateZ(0);
+}
+
+/* Espaçamentos do acesso enviados no projeto ajustado; restritos ao login e painel. */
+#view-login #adminWrap {
+    padding-top: clamp(30.4px, 3.8vw, 45.6px) !important;
+    padding-bottom: 0rem !important;
+    padding-inline: clamp(1rem, 2.5vw, 2rem) !important;
+}
+
+#loginAccess {
+    padding-block: clamp(2.5rem, 5vw, 3.5rem) !important;
+    padding-inline: clamp(1rem, 2.5vw, 2rem) !important;
+}
+
+@media (max-width: 767px) {
+    #view-login #adminWrap {
+        padding-inline: 1rem !important;
+        padding-top: 45px !important;
+        padding-bottom: 0 !important;
+    }
+
+    #view-login #adminWrap>*+* {
+        margin-block-start: 20px;
+    }
+
+    #loginCard {
+        padding: clamp(1.25rem, 5vw, 1.75rem) !important;
+    }
+}
+
+@media (hover: none) {
+    .admin-image-frame:hover .image-zoom {
+        transform: scale(var(--images-zoom)) translateZ(0);
+    }
+}
+
+/* =========================================
+   AJUSTES FINAIS — ESPAÇAMENTO GLOBAL
+   Este bloco fica no fim intencionalmente para prevalecer sobre regras anteriores.
+   ESPAÇAMENTO PADRÃO — TODOS OS DISPOSITIVOS
+   Os mesmos espaçamentos verticais do desktop valem para celular,
+   tablet e desktop, em retrato e paisagem.
+========================================= */
+
+@media screen {
+    #view-home .hero-layout {
+        gap: var(--space-gap) !important;
+        padding-top: var(--space-section-y);
+        padding-bottom: var(--space-section-y);
+    }
+
+    #loginAccess {
+        padding-block: var(--space-login-y) !important;
+    }
+
+    #view-login #adminWrap {
+        padding-top: var(--space-admin-top) !important;
+        padding-bottom: 0 !important;
+    }
+
+    #view-login #adminWrap>*+* {
+        margin-block-start: var(--space-stack);
+    }
+}
+
+/* iPad Pro 13" — somente tablet em orientação retrato.
+   Breakpoint baseado na largura CSS de 1032px do modelo de 13 polegadas.
+   Regra no final do arquivo para prevalecer sobre os paddings globais. */
+@media screen and (min-width: 1025px) and (max-width: 1100px) and (orientation: portrait) {
+
+    #loginAccess {
+        padding-top: 12rem !important;
+    }
+
+    #view-login {
+        padding-top: 3rem !important;
+    }
+}
+
+/* Hero: reduz o espaço inferior somente em telas mobile. */
+@media screen and (max-width: 767px) {
+    #view-home .hero-layout {
+        padding-top: 3rem !important;
+        padding-bottom: 2rem !important;
+    }
+
+    #view-login {
+        padding-top: 50px !important;
+    }
+
+    #view-login #adminWrap>*+* {
+        display: flex;
+        margin-block-start: var(--space-stack);
+        flex-direction: column;
+    }
+
+    .modal.active {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .modal.active .box {
+        transform: none;
+        margin: 0 20px;
+    }
+}
+
+/* Texto auxiliar do upload: alinhamento consistente à esquerda. */
+#carModal .car-image-help {
+    margin: 0;
+    text-align: left;
+    width: 100%;
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   AGENDAMENTO DE TEST DRIVE — CAMPO DE DATA RESPONSIVO
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+#driveModal .drive-date-field {
+    align-items: center;
+    background: rgba(255, 255, 255, .045);
+    border: 1px solid rgba(255, 255, 255, .12);
+    border-radius: .75rem;
+    box-sizing: border-box;
+    display: flex;
+    min-height: 3.15rem;
+    overflow: hidden;
+    position: relative;
+    transition: border-color .2s ease, background .2s ease, box-shadow .2s ease;
+    width: 100%;
+}
+
+#driveModal .drive-date-input:focus {
+    border: 0 !important;
+    box-shadow: none !important;
+}
+
+#driveModal .drive-date-field:focus-within {
+    background: rgba(245, 179, 1, .055);
+    border-color: rgba(245, 179, 1, .7);
+    box-shadow: 0 0 0 3px rgba(245, 179, 1, .09);
+}
+
+#driveModal .drive-date-icon {
+    align-items: center;
+    background: linear-gradient(145deg, rgba(245, 179, 1, .2), rgba(255, 106, 0, .13));
+    border: 1px solid rgba(245, 179, 1, .2);
+    border-radius: .55rem;
+    color: #f5b301;
+    display: flex;
+    flex: 0 0 2.15rem;
+    height: 2.15rem;
+    justify-content: center;
+    margin-left: .55rem;
+    pointer-events: none;
+    position: relative;
+    z-index: 2;
+}
+
+#driveModal .drive-date-input {
+    appearance: none;
+    -webkit-appearance: none;
+    background: transparent !important;
+    border: 0 !important;
+    box-shadow: none !important;
+    color: #e8eaf0 !important;
+    color-scheme: dark;
+    cursor: pointer;
+    flex: 1 1 auto;
+    font: inherit;
+    height: 3.1rem;
+    min-width: 0;
+    outline: 0;
+    padding: .65rem .5rem .65rem .75rem !important;
+    position: relative;
+    width: 100% !important;
+    z-index: 1;
+}
+
+#driveModal .drive-date-input::-webkit-calendar-picker-indicator {
+    cursor: pointer;
+    filter: invert(76%) sepia(82%) saturate(1100%) hue-rotate(2deg) brightness(105%);
+    margin: 0 .15rem 0 .35rem;
+    opacity: .95;
+}
+
+#driveModal .drive-date-placeholder {
+    color: #9aa0b5;
+    font-family: var(--font-body);
+    font-size: .82rem;
+    left: 3.45rem;
+    letter-spacing: .045em;
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 2;
+}
+
+#driveModal .drive-date-input:valid+.drive-date-placeholder {
+    display: none;
+}
+
+#driveModal .drive-date-chevron {
+    color: rgba(245, 179, 1, .75);
+    display: none;
+    font-size: .7rem;
+    pointer-events: none;
+    position: absolute;
+    right: .8rem;
+}
+
+@media (max-width: 767px) {
+    #driveModal .box {
+        padding: 1.25rem;
+    }
+
+    #driveModal .drive-date-field {
+        min-height: 3.35rem;
+    }
+
+    #driveModal .drive-date-input {
+        font-size: 16px;
+        height: 3.3rem;
+        padding-right: .35rem;
+    }
+
+    #driveModal .drive-date-placeholder {
+        font-size: .78rem;
+    }
+}
+
+/* Acessibilidade: respeita a preferência do sistema por movimento reduzido. */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   [U] SCROLL NATIVO E ESTABILIDADE EM DISPOSITIVOS MÓVEIS
+   Mantém o gesto nativo de puxar para atualizar. A scrollbar decorativa
+   não desenha trilhos/bordas nos celulares, mas a rolagem permanece ativa.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@media (max-width: 767px), (hover: none) and (pointer: coarse) {
+    html,
+    body {
+        -webkit-overflow-scrolling: touch;
+        -webkit-tap-highlight-color: transparent;
+        background-color: #06070c;
+        overscroll-behavior-y: auto !important;
+    }
+
+    *,
+    *::before,
+    *::after {
+        -webkit-tap-highlight-color: transparent;
+    }
+
+    /* Remove somente o desenho customizado da scrollbar; não bloqueia touch/scroll. */
+    *,
+    *::before,
+    *::after {
+        scrollbar-color: auto;
+        scrollbar-width: none;
+    }
+
+    *::-webkit-scrollbar {
+        background: transparent !important;
+        border: 0 !important;
+        display: none !important;
+        height: 0 !important;
+        width: 0 !important;
+    }
+
+    *::-webkit-scrollbar-track,
+    *::-webkit-scrollbar-thumb,
+    *::-webkit-scrollbar-corner {
+        background: transparent !important;
+        border: 0 !important;
+        box-shadow: none !important;
+    }
+}
+
+
+/* ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+   NEWSLETTER — TABLET EM ORIENTAÇÃO RETRATO
+   Empilha o campo de e-mail e o botão, mantendo ambos alinhados.
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ */
+
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: portrait) {
+    #newsForm {
+        align-items: stretch;
+        flex-direction: column;
+        gap: .65rem;
+    }
+
+    #newsForm #newsEmail {
+        box-sizing: border-box;
+        min-width: 0;
+        width: 100%;
+    }
+
+    #newsForm .btn-gold {
+        align-items: center;
+        display: flex;
+        justify-content: center;
+        min-height: 2.75rem;
+        width: 100%;
+    }
+}
